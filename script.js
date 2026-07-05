@@ -45,17 +45,16 @@ const TYPEWRITER_LINES = [
 ];
 
 /* =========================================================
-   PASSWORD SCREEN
+   PASSWORD SCREEN (FIXED REFRESH BUG)
 ========================================================= */
 const passwordScreen = document.getElementById("password-screen");
 const passwordForm = document.getElementById("password-form");
 const passwordInput = document.getElementById("password-input");
 const passwordError = document.getElementById("password-error");
 
-// Form submission ko handle karne ke liye simple function
 function checkPassword(e) {
   if (e) {
-    e.preventDefault(); // Page refresh hone se rokne ke liye
+    e.preventDefault();
     e.stopPropagation();
   }
   
@@ -75,11 +74,8 @@ function checkPassword(e) {
   return false;
 }
 
-// Dono events attach kar dete hain taake kisi tarah refresh na ho
 if (passwordForm) {
   passwordForm.addEventListener("submit", checkPassword);
-  
-  // Agar button alag se click ho to bhi yahi function chale
   const unlockBtn = passwordForm.querySelector("button");
   if (unlockBtn) {
     unlockBtn.addEventListener("click", checkPassword);
@@ -115,20 +111,22 @@ function startIntroSequence() {
   }, 2000);
 }
 
-giftBox.addEventListener("click", () => {
-  if (giftBox.classList.contains("opened")) return;
-  giftBox.classList.add("opened");
-  burstConfetti();
-  setTimeout(() => {
-    giftScreen.style.opacity = "0";
+if (giftBox) {
+  giftBox.addEventListener("click", () => {
+    if (giftBox.classList.contains("opened")) return;
+    giftBox.classList.add("opened");
+    burstConfetti();
     setTimeout(() => {
-      giftScreen.classList.add("hidden");
-      site.classList.remove("hidden");
-      document.body.style.overflow = "auto";
-      initSiteFeatures();
-    }, 700);
-  }, 900);
-});
+      giftScreen.style.opacity = "0";
+      setTimeout(() => {
+        giftScreen.classList.add("hidden");
+        site.classList.remove("hidden");
+        document.body.style.overflow = "auto";
+        initSiteFeatures();
+      }, 700);
+    }, 900);
+  });
+}
 
 /* Lock scroll until unlocked */
 document.body.style.overflow = "hidden";
@@ -145,18 +143,26 @@ function initSiteFeatures() {
   buildCalendar();
   buildGallery("gallery-grid", 50);
   buildGallery("gallery-grid-modal", 50);
-  document.getElementById("letter-body").innerText = LOVE_LETTER;
+  
+  const letterBody = document.getElementById("letter-body");
+  if (letterBody) letterBody.innerText = LOVE_LETTER;
+  
   bindModals();
   bindMusic();
-  document.getElementById("fireworks-btn").addEventListener("click", () => {
-    burstConfetti();
-    launchFireworks();
-  });
+  
+  const fireworksBtn = document.getElementById("fireworks-btn");
+  if (fireworksBtn) {
+    fireworksBtn.addEventListener("click", () => {
+      burstConfetti();
+      launchFireworks();
+    });
+  }
 }
 
 /* ---- Typewriter ---- */
 function buildTypewriter() {
   const el = document.getElementById("typewriter");
+  if (!el) return;
   let lineIndex = 0, charIndex = 0, deleting = false;
 
   function tick() {
@@ -182,13 +188,14 @@ function buildTypewriter() {
   tick();
 }
 
-/* ---- Calendar: July 2026 only, must click 7 July to unlock the site ---- */
+/* ---- Calendar: July 2026 only ---- */
 function buildCalendar() {
   const grid = document.getElementById("calendar-grid");
+  if (!grid) return;
   const YEAR = 2026;
   const MONTH = 6; // July (0-indexed)
   const daysInJuly = new Date(YEAR, MONTH + 1, 0).getDate();
-  const startOffset = new Date(YEAR, MONTH, 1).getDay(); // real weekday of 1 July 2026
+  const startOffset = new Date(YEAR, MONTH, 1).getDay();
 
   const labels = ["S", "M", "T", "W", "T", "F", "S"];
   labels.forEach(l => {
@@ -228,17 +235,20 @@ function handleCalendarClick(cell, day) {
 function unlockSite(cell) {
   const lockedContent = document.getElementById("locked-content");
   const hint = document.getElementById("calendar-hint");
-  if (lockedContent.classList.contains("unlocked")) return;
+  if (!lockedContent || lockedContent.classList.contains("unlocked")) return;
 
   cell.classList.add("unlocked");
-  hint.innerHTML = "Our story is unlocked, meri jaan. ❤";
-  hint.classList.add("unlocked-hint");
+  if (hint) {
+    hint.innerHTML = "Our story is unlocked, meri jaan. ❤";
+    hint.classList.add("unlocked-hint");
+  }
   lockedContent.classList.add("unlocked");
   burstConfetti();
   sparkleBurst();
 
   setTimeout(() => {
-    document.getElementById("choices").scrollIntoView({ behavior: "smooth", block: "start" });
+    const choices = document.getElementById("choices");
+    if (choices) choices.scrollIntoView({ behavior: "smooth", block: "start" });
   }, 500);
 }
 
@@ -247,11 +257,12 @@ function buildGallery(containerId, count) {
   const grid = document.getElementById(containerId);
   if (!grid) return;
   
+  grid.innerHTML = ""; // Clear placeholders
+  
   for (let i = 1; i <= count; i++) {
     const item = document.createElement("div");
     item.className = "gallery-item";
     
-    // GitHub root directory se direct image loading path
     const imgUrl = `${i}.JPG.jpg`;
     
     item.innerHTML = `
@@ -266,6 +277,7 @@ function bindModals() {
   const overlay = document.getElementById("modal-overlay");
   const cards = document.querySelectorAll(".choice-card");
   const modals = document.querySelectorAll(".modal");
+  if (!overlay) return;
 
   function openModal(id) {
     const modal = document.getElementById(id);
@@ -297,18 +309,19 @@ function bindModals() {
 let audioCtx, musicPlaying = false, musicNodes = [];
 
 function bindMusic() {
-  document.getElementById("music-toggle").addEventListener("click", toggleMusic);
+  const musicToggle = document.getElementById("music-toggle");
+  if (musicToggle) musicToggle.addEventListener("click", toggleMusic);
 }
 
 function toggleMusic() {
   const player = document.getElementById("music-player");
   if (!musicPlaying) {
     startAmbientMusic();
-    player.classList.add("playing");
+    if (player) player.classList.add("playing");
     musicPlaying = true;
   } else {
     stopAmbientMusic();
-    player.classList.remove("playing");
+    if (player) player.classList.remove("playing");
     musicPlaying = false;
   }
 }
@@ -356,22 +369,25 @@ function stopAmbientMusic() {
 ========================================================= */
 const cursorGlow = document.getElementById("cursor-glow");
 window.addEventListener("mousemove", (e) => {
-  cursorGlow.style.left = e.clientX + "px";
-  cursorGlow.style.top = e.clientY + "px";
+  if (cursorGlow) {
+    cursorGlow.style.left = e.clientX + "px";
+    cursorGlow.style.top = e.clientY + "px";
+  }
   spawnTrailDot(e.clientX, e.clientY);
 });
 
 const trailCanvas = document.getElementById("fx-trail");
-const trailCtx = trailCanvas.getContext("2d");
+const trailCtx = trailCanvas ? trailCanvas.getContext("2d") : null;
 let trailDots = [];
-function resizeCanvas(c) { c.width = window.innerWidth; c.height = window.innerHeight; }
-resizeCanvas(trailCanvas);
+if (trailCanvas) resizeCanvas(trailCanvas);
 
 function spawnTrailDot(x, y) {
+  if (!trailCtx) return;
   trailDots.push({ x, y, life: 1 });
   if (trailDots.length > 40) trailDots.shift();
 }
 function renderTrail() {
+  if (!trailCtx) return;
   trailCtx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
   trailDots.forEach(d => {
     trailCtx.beginPath();
@@ -383,17 +399,18 @@ function renderTrail() {
   trailDots = trailDots.filter(d => d.life > 0);
   requestAnimationFrame(renderTrail);
 }
-renderTrail();
+if (trailCtx) renderTrail();
 
 /* =========================================================
    ROSE PETALS (falling)
 ========================================================= */
 const petalCanvas = document.getElementById("fx-petals");
-const petalCtx = petalCanvas.getContext("2d");
-resizeCanvas(petalCanvas);
+const petalCtx = petalCanvas ? petalCanvas.getContext("2d") : null;
+if (petalCanvas) resizeCanvas(petalCanvas);
 let petals = [];
 
 function createPetals(count) {
+  if (!petalCanvas) return;
   for (let i = 0; i < count; i++) {
     petals.push({
       x: Math.random() * petalCanvas.width,
@@ -407,9 +424,10 @@ function createPetals(count) {
     });
   }
 }
-createPetals(35);
+if (petalCanvas) createPetals(35);
 
 function drawPetal(p) {
+  if (!petalCtx) return;
   petalCtx.save();
   petalCtx.translate(p.x, p.y);
   petalCtx.rotate((p.rot * Math.PI) / 180);
@@ -421,6 +439,7 @@ function drawPetal(p) {
   petalCtx.restore();
 }
 function renderPetals() {
+  if (!petalCtx) return;
   petalCtx.clearRect(0, 0, petalCanvas.width, petalCanvas.height);
   petals.forEach(p => {
     p.y += p.speed;
@@ -434,7 +453,7 @@ function renderPetals() {
   });
   requestAnimationFrame(renderPetals);
 }
-renderPetals();
+if (petalCtx) renderPetals();
 
 /* =========================================================
    FLOATING HEARTS
@@ -458,7 +477,8 @@ function spawnFloatingHeart() {
   setTimeout(() => heart.remove(), 8200);
 }
 setInterval(() => {
-  if (!document.getElementById("site").classList.contains("hidden")) {
+  const siteEl = document.getElementById("site");
+  if (siteEl && !siteEl.classList.contains("hidden")) {
     spawnFloatingHeart();
   }
 }, 900);
@@ -467,21 +487,24 @@ setInterval(() => {
    FIREFLIES
 ========================================================= */
 const fireflyCanvas = document.getElementById("fx-fireflies");
-const fireflyCtx = fireflyCanvas.getContext("2d");
-resizeCanvas(fireflyCanvas);
+const fireflyCtx = fireflyCanvas ? fireflyCanvas.getContext("2d") : null;
+if (fireflyCanvas) resizeCanvas(fireflyCanvas);
 let fireflies = [];
-for (let i = 0; i < 22; i++) {
-  fireflies.push({
-    x: Math.random() * fireflyCanvas.width,
-    y: Math.random() * fireflyCanvas.height,
-    r: 1 + Math.random() * 2,
-    a: Math.random(),
-    phase: Math.random() * Math.PI * 2,
-    speedX: Math.random() * 0.4 - 0.2,
-    speedY: Math.random() * 0.4 - 0.2
-  });
+if (fireflyCanvas) {
+  for (let i = 0; i < 22; i++) {
+    fireflies.push({
+      x: Math.random() * fireflyCanvas.width,
+      y: Math.random() * fireflyCanvas.height,
+      r: 1 + Math.random() * 2,
+      a: Math.random(),
+      phase: Math.random() * Math.PI * 2,
+      speedX: Math.random() * 0.4 - 0.2,
+      speedY: Math.random() * 0.4 - 0.2
+    });
+  }
 }
 function renderFireflies(t) {
+  if (!fireflyCtx) return;
   fireflyCtx.clearRect(0, 0, fireflyCanvas.width, fireflyCanvas.height);
   fireflies.forEach(f => {
     f.x += f.speedX;
@@ -500,19 +523,20 @@ function renderFireflies(t) {
   });
   requestAnimationFrame(renderFireflies);
 }
-requestAnimationFrame(renderFireflies);
+if (fireflyCtx) requestAnimationFrame(renderFireflies);
 
 /* =========================================================
    CONFETTI + FIREWORKS + SPARKLES
 ========================================================= */
 const confettiCanvas = document.getElementById("fx-confetti");
-const confettiCtx = confettiCanvas.getContext("2d");
-resizeCanvas(confettiCanvas);
+const confettiCtx = confettiCanvas ? confettiCanvas.getContext("2d") : null;
+if (confettiCanvas) resizeCanvas(confettiCanvas);
 let confettiPieces = [];
 let fireworkParticles = [];
 let sparkles = [];
 
 function burstConfetti() {
+  if (!confettiCanvas) return;
   const colors = ["#d4af37", "#f0d98c", "#b8324a", "#7a1128", "#f7ecd6"];
   for (let i = 0; i < 120; i++) {
     confettiPieces.push({
@@ -530,6 +554,7 @@ function burstConfetti() {
 }
 
 function launchFireworks() {
+  if (!confettiCanvas) return;
   const colors = ["#d4af37", "#f0d98c", "#b8324a", "#ff8a94", "#f7ecd6"];
   for (let burst = 0; burst < 4; burst++) {
     setTimeout(() => {
@@ -562,6 +587,7 @@ function sparkleBurst() {
 }
 
 function renderEffects() {
+  if (!confettiCtx) return;
   confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
 
   confettiPieces.forEach(p => {
@@ -600,7 +626,7 @@ function renderEffects() {
 
   requestAnimationFrame(renderEffects);
 }
-renderEffects();
+if (confettiCtx) renderEffects();
 
 /* =========================================================
    PARALLAX ON SCROLL
@@ -616,6 +642,9 @@ window.addEventListener("scroll", () => {
 /* =========================================================
    RESIZE HANDLING
 ========================================================= */
+function resizeCanvas(c) { c.width = window.innerWidth; c.height = window.innerHeight; }
 window.addEventListener("resize", () => {
-  [petalCanvas, fireflyCanvas, trailCanvas, confettiCanvas].forEach(resizeCanvas);
+  [petalCanvas, fireflyCanvas, trailCanvas, confettiCanvas].forEach(c => {
+    if (c) resizeCanvas(c);
+  });
 });
