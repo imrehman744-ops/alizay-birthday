@@ -1,5 +1,5 @@
 /* =========================================================
-   CONFIG
+   CONFIG & ESSENTIAL TEXTS
 ========================================================= */
 const SECRET_PASSWORD = "Antalhayat";
 const LOVE_LETTER = `Janum,
@@ -44,8 +44,11 @@ const TYPEWRITER_LINES = [
   "Forever Yours, Abdul Rehman."
 ];
 
+// 5 Active images array jo slideshow mein rotate hongi
+const IMAGES_ARRAY = ["1.JPG.jpg", "2.JPG.jpg", "3.JPG.jpg", "4.JPG.jpg", "5.JPG.jpg"];
+
 /* =========================================================
-   PASSWORD SCREEN (FIXED REFRESH BUG)
+   PASSWORD SCREEN HANDLING
 ========================================================= */
 const passwordScreen = document.getElementById("password-screen");
 const passwordForm = document.getElementById("password-form");
@@ -53,37 +56,29 @@ const passwordInput = document.getElementById("password-input");
 const passwordError = document.getElementById("password-error");
 
 function checkPassword(e) {
-  if (e) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
+  if (e) e.preventDefault();
   
   if (passwordInput.value.trim() === SECRET_PASSWORD) {
-    if (passwordError) passwordError.classList.remove("show");
+    if (passwordError) passwordError.style.display = "none";
     passwordScreen.style.opacity = "0";
     setTimeout(() => {
       passwordScreen.classList.add("hidden");
       startIntroSequence();
     }, 700);
   } else {
-    if (passwordError) passwordError.classList.add("show");
+    if (passwordError) passwordError.style.display = "block";
     passwordInput.style.borderColor = "#ff5566";
     passwordInput.value = "";
     setTimeout(() => (passwordInput.style.borderColor = ""), 900);
   }
-  return false;
 }
 
 if (passwordForm) {
   passwordForm.addEventListener("submit", checkPassword);
-  const unlockBtn = passwordForm.querySelector("button");
-  if (unlockBtn) {
-    unlockBtn.addEventListener("click", checkPassword);
-  }
 }
 
 /* =========================================================
-   INTRO SEQUENCE: loading -> ribbon -> gift -> site
+   INTRO ANIMATION TIMELINE
 ========================================================= */
 const loadingScreen = document.getElementById("loading-screen");
 const ribbonScreen = document.getElementById("ribbon-screen");
@@ -93,13 +88,11 @@ const site = document.getElementById("site");
 
 function startIntroSequence() {
   loadingScreen.classList.remove("hidden");
-
   setTimeout(() => {
     loadingScreen.style.opacity = "0";
     setTimeout(() => {
       loadingScreen.classList.add("hidden");
       ribbonScreen.classList.remove("hidden");
-
       setTimeout(() => {
         ribbonScreen.style.opacity = "0";
         setTimeout(() => {
@@ -128,11 +121,10 @@ if (giftBox) {
   });
 }
 
-/* Lock scroll until unlocked */
 document.body.style.overflow = "hidden";
 
 /* =========================================================
-   SITE FEATURES (init once unlocked)
+   SITE SYSTEM INITIALIZATION
 ========================================================= */
 let siteInitialized = false;
 function initSiteFeatures() {
@@ -142,9 +134,9 @@ function initSiteFeatures() {
   buildTypewriter();
   buildCalendar();
   
-  // Naya Live Slideshow Setup
-  buildLiveSlideshow("gallery-grid");
-  buildLiveSlideshow("gallery-grid-modal");
+  // Custom Smooth Slideshow Setup
+  setupLiveSlideshow("gallery-grid");
+  setupLiveSlideshow("gallery-grid-modal");
   
   const letterBody = document.getElementById("letter-body");
   if (letterBody) letterBody.innerText = LOVE_LETTER;
@@ -161,7 +153,7 @@ function initSiteFeatures() {
   }
 }
 
-/* ---- Typewriter ---- */
+/* ---- Typewriter Engine ---- */
 function buildTypewriter() {
   const el = document.getElementById("typewriter");
   if (!el) return;
@@ -190,12 +182,12 @@ function buildTypewriter() {
   tick();
 }
 
-/* ---- Calendar: July 2026 only ---- */
+/* ---- July 2026 Interactive Calendar ---- */
 function buildCalendar() {
   const grid = document.getElementById("calendar-grid");
   if (!grid) return;
   const YEAR = 2026;
-  const MONTH = 6; // July (0-indexed)
+  const MONTH = 6; 
   const daysInJuly = new Date(YEAR, MONTH + 1, 0).getDate();
   const startOffset = new Date(YEAR, MONTH, 1).getDay();
 
@@ -204,7 +196,6 @@ function buildCalendar() {
     const d = document.createElement("div");
     d.className = "cal-day weekday-label";
     d.style.opacity = ".4";
-    d.style.fontWeight = "600";
     d.textContent = l;
     grid.appendChild(d);
   });
@@ -219,476 +210,189 @@ function buildCalendar() {
     const cell = document.createElement("div");
     cell.className = "cal-day day-cell" + (day === 7 ? " highlight" : "");
     cell.textContent = day;
-    cell.dataset.day = day;
-    cell.addEventListener("click", () => handleCalendarClick(cell, day));
+    cell.addEventListener("click", () => {
+      if (day === 7) {
+        unlockStoryGate(cell);
+      } else {
+        cell.classList.add("shake");
+        setTimeout(() => cell.classList.remove("shake"), 400);
+      }
+    });
     grid.appendChild(cell);
   }
 }
 
-function handleCalendarClick(cell, day) {
-  if (day === 7) {
-    unlockSite(cell);
-  } else {
-    cell.classList.add("shake");
-    setTimeout(() => cell.classList.remove("shake"), 400);
-  }
-}
-
-function unlockSite(cell) {
+function unlockStoryGate(cell) {
   const lockedContent = document.getElementById("locked-content");
   const hint = document.getElementById("calendar-hint");
   if (!lockedContent || lockedContent.classList.contains("unlocked")) return;
 
   cell.classList.add("unlocked");
-  if (hint) {
-    hint.innerHTML = "Our story is unlocked, meri jaan. ❤";
-    hint.classList.add("unlocked-hint");
-  }
+  if (hint) hint.innerHTML = "Our story is unlocked, meri jaan. ❤";
   lockedContent.classList.add("unlocked");
   burstConfetti();
-  sparkleBurst();
-
+  
   setTimeout(() => {
     const choices = document.getElementById("choices");
     if (choices) choices.scrollIntoView({ behavior: "smooth", block: "start" });
   }, 500);
 }
 
-/* ---- NEW: Live Animated Automatic Slideshow ---- */
-function buildLiveSlideshow(containerId) {
+/* ---- Seamless Dynamic Auto Slideshow Engine ---- */
+function setupLiveSlideshow(containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  // Purane static grid styles ko auto-fade container mein convert karne ke liye styling reset
-  container.style.display = "block";
-  container.style.position = "relative";
-  container.style.width = "100%";
-  container.style.height = "450px"; 
-  container.style.overflow = "hidden";
-  container.style.borderRadius = "15px";
-  container.style.boxShadow = "0 8px 32px rgba(0,0,0,0.5)";
-  container.innerHTML = ""; // Clear placeholders
+  // Purane tamam static structure ko wipe out karna taake grid bugs na aayen
+  container.innerHTML = "";
+  let activeIndex = 0;
 
-  // Aapki uploaded 5 images ki arrays
-  const images = ["1.JPG.jpg", "2.JPG.jpg", "3.JPG.jpg", "4.JPG.jpg", "5.JPG.jpg"];
-  let currentIdx = 0;
-
-  // Har image ke liye slide element banana aur inject karna
-  images.forEach((url, index) => {
+  IMAGES_ARRAY.forEach((src, idx) => {
     const slide = document.createElement("div");
     slide.className = "live-slide";
-    slide.style.position = "absolute";
-    slide.style.top = "0";
-    slide.style.left = "0";
-    slide.style.width = "100%";
-    slide.style.height = "100%";
-    slide.style.opacity = index === 0 ? "1" : "0";
-    slide.style.transition = "opacity 1.2s ease-in-out, transform 6s linear";
-    slide.style.transform = index === 0 ? "scale(1)" : "scale(1.1)";
-    
-    slide.innerHTML = `
-      <img src="${url}" alt="Memory" style="width:100%; height:100%; object-fit:cover;">
-    `;
+    slide.style.opacity = idx === 0 ? "1" : "0";
+    slide.style.transform = idx === 0 ? "scale(1.02)" : "scale(1.1)";
+    slide.innerHTML = `<img src="${src}" alt="Memory Dynamic Layer">`;
     container.appendChild(slide);
   });
 
-  const slides = container.querySelectorAll(".live-slide");
-  if(slides.length === 0) return;
+  const allSlides = container.querySelectorAll(".live-slide");
+  if (allSlides.length === 0) return;
 
-  // Slow Cinematic Zoom Effect setup karein pehli slide par
-  slides[0].style.transform = "scale(1.08)";
+  // Zoom setup initial transition effect
+  setTimeout(() => { allSlides[0].style.transform = "scale(1.06)"; }, 100);
 
-  // Automatic slide changing logic loop (Har 3.5 seconds baad image badlegi)
+  // Automatic slide execution loop (Runs beautifully every 4 seconds)
   setInterval(() => {
-    // Current active slide ko out-fade karein aur scale reset karein
-    slides[currentIdx].style.opacity = "0";
-    slides[currentIdx].style.transform = "scale(1.1)";
+    allSlides[activeIndex].style.opacity = "0";
+    allSlides[activeIndex].style.transform = "scale(1.12)";
 
-    // Agli slide par switch karein
-    currentIdx = (currentIdx + 1) % slides.length;
+    activeIndex = (activeIndex + 1) % allSlides.length;
 
-    // Nayi slide ko active, in-fade aur slow zoom in karein
-    slides[currentIdx].style.opacity = "1";
-    slides[currentIdx].style.transform = "scale(1.05)";
-  }, 3500);
+    allSlides[activeIndex].style.opacity = "1";
+    allSlides[activeIndex].style.transform = "scale(1.04)";
+  }, 4000);
 }
 
-/* ---- Backward compatibility ke liye blank function backup ---- */
-function buildGallery(c, ct) {}
-
-/* ---- Modals ---- */
+/* ---- Modal Navigation Controls ---- */
 function bindModals() {
   const overlay = document.getElementById("modal-overlay");
   const cards = document.querySelectorAll(".choice-card");
   const modals = document.querySelectorAll(".modal");
   if (!overlay) return;
 
-  function openModal(id) {
-    const modal = document.getElementById(id);
-    if (!modal) return;
-    overlay.classList.add("show");
-    modal.classList.add("show");
-    sparkleBurst();
-  }
-  function closeAll() {
+  cards.forEach(card => {
+    card.addEventListener("click", () => {
+      const target = document.getElementById(card.dataset.target);
+      if (target) {
+        overlay.classList.add("show");
+        target.classList.add("show");
+      }
+    });
+  });
+
+  const closeAll = () => {
     overlay.classList.remove("show");
     modals.forEach(m => m.classList.remove("show"));
-  }
+  };
 
-  cards.forEach(card => {
-    card.addEventListener("click", () => openModal(card.dataset.target));
-  });
   overlay.addEventListener("click", closeAll);
-  document.querySelectorAll(".modal-close").forEach(btn => {
-    btn.addEventListener("click", closeAll);
-  });
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeAll();
-  });
+  document.querySelectorAll(".modal-close").forEach(btn => btn.addEventListener("click", closeAll));
 }
 
-/* =========================================================
-   MUSIC CONFIG
-========================================================= */
-let audioCtx, musicPlaying = false, musicNodes = [];
-
+/* ---- Audio Context Synths ---- */
+let audioCtx, musicPlaying = false, nodes = [];
 function bindMusic() {
-  const musicToggle = document.getElementById("music-toggle");
-  if (musicToggle) musicToggle.addEventListener("click", toggleMusic);
-}
-
-function toggleMusic() {
-  const player = document.getElementById("music-player");
-  if (!musicPlaying) {
-    startAmbientMusic();
-    if (player) player.classList.add("playing");
-    musicPlaying = true;
-  } else {
-    stopAmbientMusic();
-    if (player) player.classList.remove("playing");
-    musicPlaying = false;
-  }
-}
-
-function startAmbientMusic() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  const masterGain = audioCtx.createGain();
-  masterGain.gain.value = 0.06;
-  masterGain.connect(audioCtx.destination);
-
-  const notes = [261.63, 329.63, 392.0, 440.0, 523.25];
-  notes.forEach((freq, i) => {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = "sine";
-    osc.frequency.value = freq;
-    gain.gain.value = 0;
-    osc.connect(gain);
-    gain.connect(masterGain);
-    osc.start();
-
-    const lfo = audioCtx.createOscillator();
-    const lfoGain = audioCtx.createGain();
-    lfo.frequency.value = 0.08 + i * 0.02;
-    lfoGain.gain.value = 0.035;
-    lfo.connect(lfoGain);
-    lfoGain.connect(gain.gain);
-    lfo.start();
-
-    musicNodes.push(osc, lfo, gain, lfoGain);
+  const btn = document.getElementById("music-toggle");
+  if (btn) btn.addEventListener("click", () => {
+    const player = document.getElementById("music-player");
+    if (!musicPlaying) {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const master = audioCtx.createGain(); master.gain.value = 0.05; master.connect(audioCtx.destination);
+      [261.63, 329.63, 392.0, 523.25].forEach((f) => {
+        const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
+        o.frequency.value = f; g.gain.value = 0.02; o.connect(g); g.connect(master); o.start();
+        nodes.push(o, g);
+      });
+      nodes.push(master);
+      if (player) player.classList.add("playing");
+      musicPlaying = true;
+    } else {
+      nodes.forEach(n => { try { n.stop(); } catch(e){} }); nodes = [];
+      if (player) player.classList.remove("playing");
+      musicPlaying = false;
+    }
   });
-  musicNodes.push(masterGain);
-}
-
-function stopAmbientMusic() {
-  musicNodes.forEach(n => {
-    try { n.stop && n.stop(); } catch (e) {}
-    try { n.disconnect && n.disconnect(); } catch (e) {}
-  });
-  musicNodes = [];
 }
 
 /* =========================================================
-   CURSOR GLOW + MOUSE TRAIL
-========================================================= */
-const cursorGlow = document.getElementById("cursor-glow");
-window.addEventListener("mousemove", (e) => {
-  if (cursorGlow) {
-    cursorGlow.style.left = e.clientX + "px";
-    cursorGlow.style.top = e.clientY + "px";
-  }
-  spawnTrailDot(e.clientX, e.clientY);
-});
-
-const trailCanvas = document.getElementById("fx-trail");
-const trailCtx = trailCanvas ? trailCanvas.getContext("2d") : null;
-let trailDots = [];
-if (trailCanvas) resizeCanvas(trailCanvas);
-
-function spawnTrailDot(x, y) {
-  if (!trailCtx) return;
-  trailDots.push({ x, y, life: 1 });
-  if (trailDots.length > 40) trailDots.shift();
-}
-function renderTrail() {
-  if (!trailCtx) return;
-  trailCtx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
-  trailDots.forEach(d => {
-    trailCtx.beginPath();
-    trailCtx.arc(d.x, d.y, 3 * d.life, 0, Math.PI * 2);
-    trailCtx.fillStyle = `rgba(212,175,55,${d.life * 0.5})`;
-    trailCtx.fill();
-    d.life -= 0.035;
-  });
-  trailDots = trailDots.filter(d => d.life > 0);
-  requestAnimationFrame(renderTrail);
-}
-if (trailCtx) renderTrail();
-
-/* =========================================================
-   ROSE PETALS (falling)
+   AMBIENT FX (Canvas Canvas Systems)
 ========================================================= */
 const petalCanvas = document.getElementById("fx-petals");
 const petalCtx = petalCanvas ? petalCanvas.getContext("2d") : null;
-if (petalCanvas) resizeCanvas(petalCanvas);
-let petals = [];
-
-function createPetals(count) {
-  if (!petalCanvas) return;
-  for (let i = 0; i < count; i++) {
-    petals.push({
-      x: Math.random() * petalCanvas.width,
-      y: Math.random() * -petalCanvas.height,
-      size: 6 + Math.random() * 8,
-      speed: 0.4 + Math.random() * 0.8,
-      drift: Math.random() * 1 - 0.5,
-      rot: Math.random() * 360,
-      rotSpeed: Math.random() * 1 - 0.5,
-      opacity: 0.4 + Math.random() * 0.5
-    });
-  }
-}
-if (petalCanvas) createPetals(35);
-
-function drawPetal(p) {
-  if (!petalCtx) return;
-  petalCtx.save();
-  petalCtx.translate(p.x, p.y);
-  petalCtx.rotate((p.rot * Math.PI) / 180);
-  petalCtx.globalAlpha = p.opacity;
-  petalCtx.fillStyle = "#b8324a";
-  petalCtx.beginPath();
-  petalCtx.ellipse(0, 0, p.size * 0.6, p.size, 0, 0, Math.PI * 2);
-  petalCtx.fill();
-  petalCtx.restore();
-}
-function renderPetals() {
-  if (!petalCtx) return;
-  petalCtx.clearRect(0, 0, petalCanvas.width, petalCanvas.height);
-  petals.forEach(p => {
-    p.y += p.speed;
-    p.x += p.drift;
-    p.rot += p.rotSpeed;
-    if (p.y > petalCanvas.height + 20) {
-      p.y = -20;
-      p.x = Math.random() * petalCanvas.width;
-    }
-    drawPetal(p);
-  });
-  requestAnimationFrame(renderPetals);
-}
-if (petalCtx) renderPetals();
-
-/* =========================================================
-   FLOATING HEARTS
-========================================================= */
-function spawnFloatingHeart() {
-  const heart = document.createElement("div");
-  heart.textContent = "❤";
-  heart.style.position = "fixed";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.bottom = "-40px";
-  heart.style.fontSize = 12 + Math.random() * 16 + "px";
-  heart.style.color = "rgba(184,50,74," + (0.4 + Math.random() * 0.4) + ")";
-  heart.style.zIndex = "6";
-  heart.style.pointerEvents = "none";
-  heart.style.transition = "transform 8s linear, opacity 8s linear";
-  document.body.appendChild(heart);
-  requestAnimationFrame(() => {
-    heart.style.transform = `translateY(-${window.innerHeight + 100}px) translateX(${Math.random() * 100 - 50}px)`;
-    heart.style.opacity = "0";
-  });
-  setTimeout(() => heart.remove(), 8200);
-}
-setInterval(() => {
-  const siteEl = document.getElementById("site");
-  if (siteEl && !siteEl.classList.contains("hidden")) {
-    spawnFloatingHeart();
-  }
-}, 900);
-
-/* =========================================================
-   FIREFLIES
-========================================================= */
 const fireflyCanvas = document.getElementById("fx-fireflies");
 const fireflyCtx = fireflyCanvas ? fireflyCanvas.getContext("2d") : null;
-if (fireflyCanvas) resizeCanvas(fireflyCanvas);
-let fireflies = [];
-if (fireflyCanvas) {
-  for (let i = 0; i < 22; i++) {
-    fireflies.push({
-      x: Math.random() * fireflyCanvas.width,
-      y: Math.random() * fireflyCanvas.height,
-      r: 1 + Math.random() * 2,
-      a: Math.random(),
-      phase: Math.random() * Math.PI * 2,
-      speedX: Math.random() * 0.4 - 0.2,
-      speedY: Math.random() * 0.4 - 0.2
-    });
-  }
-}
-function renderFireflies(t) {
-  if (!fireflyCtx) return;
-  fireflyCtx.clearRect(0, 0, fireflyCanvas.width, fireflyCanvas.height);
-  fireflies.forEach(f => {
-    f.x += f.speedX;
-    f.y += f.speedY;
-    if (f.x < 0 || f.x > fireflyCanvas.width) f.speedX *= -1;
-    if (f.y < 0 || f.y > fireflyCanvas.height) f.speedY *= -1;
-    const glow = 0.4 + 0.6 * Math.abs(Math.sin(t / 800 + f.phase));
-    fireflyCtx.beginPath();
-    fireflyCtx.arc(f.x, f.y, f.r * 2.5, 0, Math.PI * 2);
-    fireflyCtx.fillStyle = `rgba(240,217,140,${glow * 0.25})`;
-    fireflyCtx.fill();
-    fireflyCtx.beginPath();
-    fireflyCtx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-    fireflyCtx.fillStyle = `rgba(255,244,214,${glow})`;
-    fireflyCtx.fill();
-  });
-  requestAnimationFrame(renderFireflies);
-}
-if (fireflyCtx) requestAnimationFrame(renderFireflies);
-
-/* =========================================================
-   CONFETTI + FIREWORKS + SPARKLES
-========================================================= */
 const confettiCanvas = document.getElementById("fx-confetti");
 const confettiCtx = confettiCanvas ? confettiCanvas.getContext("2d") : null;
-if (confettiCanvas) resizeCanvas(confettiCanvas);
-let confettiPieces = [];
-let fireworkParticles = [];
-let sparkles = [];
+
+let petals = [], fireflies = [], confettiPieces = [], fireworks = [];
+
+function resizeAll() {
+  [petalCanvas, fireflyCanvas, confettiCanvas].forEach(c => {
+    if(c) { c.width = window.innerWidth; c.height = window.innerHeight; }
+  });
+}
+window.addEventListener("resize", resizeAll);
+resizeAll();
+
+// Populate items
+if (petalCtx) {
+  for(let i=0; i<30; i++) petals.push({ x: Math.random()*window.innerWidth, y: Math.random()*-window.innerHeight, size: 8+Math.random()*6, speed: 0.5+Math.random()*0.8, drift: Math.random()*0.6-0.3 });
+}
+if (fireflyCtx) {
+  for(let i=0; i<20; i++) fireflies.push({ x: Math.random()*window.innerWidth, y: Math.random()*window.innerHeight, r: 1.5+Math.random(), speedX: Math.random()*0.4-0.2, speedY: Math.random()*0.4-0.2 });
+}
 
 function burstConfetti() {
-  if (!confettiCanvas) return;
-  const colors = ["#d4af37", "#f0d98c", "#b8324a", "#7a1128", "#f7ecd6"];
-  for (let i = 0; i < 120; i++) {
-    confettiPieces.push({
-      x: confettiCanvas.width / 2 + (Math.random() * 200 - 100),
-      y: confettiCanvas.height / 2,
-      vx: Math.random() * 8 - 4,
-      vy: Math.random() * -10 - 3,
-      size: 4 + Math.random() * 5,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      rot: Math.random() * 360,
-      rotSpeed: Math.random() * 10 - 5,
-      life: 1
-    });
+  if (!confettiCtx) return;
+  for (let i = 0; i < 80; i++) {
+    confettiPieces.push({ x: window.innerWidth/2, y: window.innerHeight/2, vx: Math.random()*6-3, vy: Math.random()*-8-2, size: 5+Math.random()*4, color: ["#d4af37", "#b8324a", "#f7ecd6"][Math.floor(Math.random()*3)], life: 1 });
   }
 }
 
 function launchFireworks() {
-  if (!confettiCanvas) return;
-  const colors = ["#d4af37", "#f0d98c", "#b8324a", "#ff8a94", "#f7ecd6"];
-  for (let burst = 0; burst < 4; burst++) {
-    setTimeout(() => {
-      const cx = confettiCanvas.width * (0.2 + Math.random() * 0.6);
-      const cy = confettiCanvas.height * (0.2 + Math.random() * 0.4);
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      for (let i = 0; i < 60; i++) {
-        const angle = (Math.PI * 2 * i) / 60;
-        const speed = 2 + Math.random() * 3;
-        fireworkParticles.push({
-          x: cx, y: cy,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
-          color, life: 1
-        });
-      }
-    }, burst * 450);
+  if (!confettiCtx) return;
+  for (let i = 0; i < 40; i++) {
+    const angle = (Math.PI*2*i)/40; const speed = 3+Math.random()*2;
+    fireworks.push({ x: window.innerWidth/2, y: window.innerHeight*0.4, vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed, color: "#d4af37", life: 1 });
   }
 }
 
-function sparkleBurst() {
-  for (let i = 0; i < 20; i++) {
-    sparkles.push({
-      x: window.innerWidth / 2 + (Math.random() * 300 - 150),
-      y: window.innerHeight / 2 + (Math.random() * 200 - 100),
-      size: 1 + Math.random() * 2,
-      life: 1
+function loopFX(t) {
+  if (petalCtx) {
+    petalCtx.clearRect(0,0,window.innerWidth,window.innerHeight);
+    petalCtx.fillStyle = "#b8324a";
+    petals.forEach(p => {
+      p.y += p.speed; p.x += p.drift;
+      if (p.y > window.innerHeight) { p.y = -20; p.x = Math.random()*window.innerWidth; }
+      petalCtx.beginPath(); petalCtx.ellipse(p.x, p.y, p.size*0.6, p.size, 0, 0, Math.PI*2); petalCtx.fill();
     });
   }
+  if (fireflyCtx) {
+    fireflyCtx.clearRect(0,0,window.innerWidth,window.innerHeight);
+    fireflies.forEach(f => {
+      f.x += f.speedX; f.y += f.speedY;
+      if(f.x<0 || f.x>window.innerWidth) f.speedX*=-1; if(f.y<0 || f.y>window.innerHeight) f.speedY*=-1;
+      fireflyCtx.beginPath(); fireflyCtx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+      fireflyCtx.fillStyle = `rgba(240,217,140,${0.3+Math.abs(Math.sin(t/600))*0.7})`; fireflyCtx.fill();
+    });
+  }
+  if (confettiCtx) {
+    confettiCtx.clearRect(0,0,window.innerWidth,window.innerHeight);
+    confettiPieces.forEach(p => { p.x+=p.vx; p.y+=p.vy; p.vy+=0.12; p.life-=0.01; if(p.life>0){ confettiCtx.fillStyle=p.color; confettiCtx.globalAlpha=p.life; confettiCtx.fillRect(p.x,p.y,p.size,p.size*0.6); } });
+    fireworks.forEach(f => { f.x+=f.vx; f.y+=f.vy; f.vy+=0.04; f.life-=0.015; if(f.life>0){ confettiCtx.fillStyle=f.color; confettiCtx.globalAlpha=f.life; confettiCtx.beginPath(); confettiCtx.arc(f.x,f.y,2.5,0,Math.PI*2); confettiCtx.fill(); } });
+    confettiCtx.globalAlpha = 1.0;
+  }
+  requestAnimationFrame(loopFX);
 }
-
-function renderEffects() {
-  if (!confettiCtx) return;
-  confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-
-  confettiPieces.forEach(p => {
-    p.x += p.vx; p.y += p.vy; p.vy += 0.15; p.rot += p.rotSpeed; p.life -= 0.008;
-    confettiCtx.save();
-    confettiCtx.translate(p.x, p.y);
-    confettiCtx.rotate((p.rot * Math.PI) / 180);
-    confettiCtx.globalAlpha = Math.max(p.life, 0);
-    confettiCtx.fillStyle = p.color;
-    confettiCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
-    confettiCtx.restore();
-  });
-  confettiPieces = confettiPieces.filter(p => p.life > 0);
-
-  fireworkParticles.forEach(p => {
-    p.x += p.vx; p.y += p.vy; p.vy += 0.03; p.life -= 0.012;
-    confettiCtx.beginPath();
-    confettiCtx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-    confettiCtx.globalAlpha = Math.max(p.life, 0);
-    confettiCtx.fillStyle = p.color;
-    confettiCtx.fill();
-  });
-  confettiCtx.globalAlpha = 1;
-  fireworkParticles = fireworkParticles.filter(p => p.life > 0);
-
-  sparkles.forEach(s => {
-    s.life -= 0.02;
-    confettiCtx.beginPath();
-    confettiCtx.globalAlpha = Math.max(s.life, 0);
-    confettiCtx.fillStyle = "#f0d98c";
-    confettiCtx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-    confettiCtx.fill();
-  });
-  confettiCtx.globalAlpha = 1;
-  sparkles = sparkles.filter(s => s.life > 0);
-
-  requestAnimationFrame(renderEffects);
-}
-if (confettiCtx) renderEffects();
-
-/* =========================================================
-   PARALLAX ON SCROLL
-========================================================= */
-window.addEventListener("scroll", () => {
-  const scrollY = window.scrollY;
-  const heroGlow = document.querySelector(".hero-glow");
-  if (heroGlow) heroGlow.style.transform = `translate(-50%, ${scrollY * 0.25}px)`;
-  const heroName = document.getElementById("hero-name");
-  if (heroName) heroName.style.transform = `translateY(${scrollY * 0.12}px)`;
-});
-
-/* =========================================================
-   RESIZE HANDLING
-========================================================= */
-function resizeCanvas(c) { c.width = window.innerWidth; c.height = window.innerHeight; }
-window.addEventListener("resize", () => {
-  [petalCanvas, fireflyCanvas, trailCanvas, confettiCanvas].forEach(c => {
-    if (c) resizeCanvas(c);
-  });
-});
+requestAnimationFrame(loopFX);
