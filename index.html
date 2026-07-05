@@ -1,221 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Ant Al Hayat — For Alizay</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Memories</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Style Sheets -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ================= CANVAS LAYERS (ambient fx) ================= -->
-<canvas id="fx-petals"></canvas>
-<canvas id="fx-fireflies"></canvas>
-<div id="cursor-glow"></div>
-<canvas id="fx-trail"></canvas>
-<canvas id="fx-confetti"></canvas>
+    <!-- AMBIENT FX LAYERS -->
+    <div id="fx-petals"></div>
+    <div id="fx-fireflies"></div>
+    <div id="fx-trail"></div>
+    <div id="fx-confetti"></div>
+    <div id="cursor-glow"></div>
 
-<!-- ================= PASSWORD SCREEN ================= -->
-<section id="password-screen" class="screen">
-  <div class="password-card glass">
-    <div class="crest">✦</div>
-    <h1 class="script-title">Kul Kainat</h1>
-    <p class="sub">A private world, sealed just for you.</p>
-    <form id="password-form" autocomplete="off">
-      <input type="password" id="password-input" placeholder="Enter the secret word" required>
-      <button type="submit" class="btn-gold">Unlock My Heart</button>
-    </form>
-    <p id="password-error">That is not the word my heart is waiting for. Try again, jaan.</p>
-  </div>
-  <div class="corner-flourish tl"></div>
-  <div class="corner-flourish tr"></div>
-  <div class="corner-flourish bl"></div>
-  <div class="corner-flourish br"></div>
-</section>
-
-<!-- ================= LOADING SCREEN ================= -->
-<section id="loading-screen" class="screen hidden">
-  <div class="loader-wrap">
-    <div class="loader-ring"></div>
-    <div class="loader-heart">❤</div>
-    <p class="loader-text">Preparing something beautiful<span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
-  </div>
-</section>
-
-<!-- ================= RIBBON OPENING ================= -->
-<section id="ribbon-screen" class="screen hidden">
-  <div class="ribbon-vertical"></div>
-  <div class="ribbon-horizontal"></div>
-  <div class="ribbon-seal">💌</div>
-  <p class="ribbon-hint">Untying the ribbon of a promise...</p>
-</section>
-
-<!-- ================= GIFT BOX ================= -->
-<section id="gift-screen" class="screen hidden">
-  <div class="gift-box" id="gift-box">
-    <div class="gift-lid"></div>
-    <div class="gift-base"></div>
-    <div class="gift-ribbon-v"></div>
-    <div class="gift-ribbon-h"></div>
-    <div class="gift-bow">🎀</div>
-    <div class="gift-glow"></div>
-  </div>
-  <p class="gift-hint">Tap the gift, meri jaan</p>
-</section>
-
-<!-- ================= MAIN SITE ================= -->
-<div id="site" class="hidden">
-
-  <!-- Music Player -->
-  <div id="music-player" class="glass">
-    <button id="music-toggle" aria-label="Toggle music">
-      <span class="note">♪</span>
-    </button>
-    <div class="music-bars"><span></span><span></span><span></span><span></span></div>
-  </div>
-
-  <!-- HERO -->
-  <header id="hero">
-    <div class="hero-glow"></div>
-    <p class="eyebrow">Forever Yours, Abdul Rehman</p>
-    <h1 id="hero-name" class="hero-name">Alizay</h1>
-    <p class="hero-typewriter"><span id="typewriter"></span><span class="cursor-blink">|</span></p>
-
-    <div class="nickname-cloud" id="nickname-cloud">
-      <span>Ant Al Hayat</span>
-      <span>Zoja-E-Janum</span>
-      <span>Sakoon-e-Qalb</span>
-      <span>Wajid-e-Muhabbat</span>
-      <span>Ya Sadati</span>
-      <span>Rooh-e-Man</span>
-      <span>Noor-e-Jahan</span>
-      <span>Dharkan-e-Dil</span>
-      <span>Rooh-e-Jism</span>
-      <span>Kul Kainat</span>
-      <span>Wafadar-e-Ishq</span>
+    <!-- MUSIC PLAYER -->
+    <div id="music-player" class="glass">
+        <button id="music-toggle">🎵</button>
+        <div class="music-bars">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </div>
 
-    <div class="hero-date glass">
-      <span class="crown">👑</span>
-      <p>07 <span class="gold-text">July</span> 2007</p>
-    </div>
+    <!-- HERO SECTION -->
+    <header id="hero">
+        <div class="hero-glow"></div>
+        <p class="eyebrow">Welcome to Our World</p>
+        <h1 class="hero-name">Our Journey</h1>
+        <div class="hero-typewriter"><span id="typewriter-text"></span><span class="cursor-blink">|</span></div>
+        
+        <div class="nickname-cloud">
+            <span>Beautiful Moments</span>
+            <span>Endless Laughs</span>
+            <span>Unforgettable Days</span>
+            <span>Together Forever</span>
+        </div>
 
-    <a href="#choices" class="scroll-cue" aria-label="Scroll down">
-      <span></span>Scroll the story of us
-    </a>
-  </header>
+        <div class="hero-date glass">
+            <span class="crown">👑</span> Celebrated <span class="gold-text">Always</span>
+        </div>
 
-  <!-- CALENDAR (unlock gate) -->
-  <section id="calendar-section" class="section">
-    <h2 class="section-title">The Day Heaven Sent a Gift</h2>
-    <div class="calendar glass">
-      <div class="calendar-head">
-        <span id="cal-month-label">July 2026</span>
-      </div>
-      <div class="calendar-grid" id="calendar-grid"></div>
-      <p class="calendar-hint" id="calendar-hint">Click <strong>7 July</strong> to unlock the rest of our story.</p>
-    </div>
-  </section>
+        <a href="#memories-section" class="scroll-cue" id="explore-trigger">
+            Explore Memories
+            <span></span>
+        </a>
+    </header>
 
-  <!-- LOCKED CONTENT -->
-  <div id="locked-content" class="locked">
+    <!-- MAIN LOCKED CONTENT GATE -->
+    <main id="locked-content" class="unlocked">
+        
+        <!-- =========================================================
+             OUR MEMORIES SECTION (Kinetic Cascade Stage)
+        ========================================================= -->
+        <section id="memories-section" class="section">
+            <h2 class="section-title">Our Precious Memories</h2>
+            
+            <!-- JavaScript automatic gravity explosion builds here -->
+            <div id="memory-cascade-stage"></div>
+        </section>
 
-    <!-- CHOICE CARDS -->
-    <section id="choices" class="section">
-      <h2 class="section-title">Choose a Path Into My Heart</h2>
-      <div class="cards-grid">
-        <button class="choice-card glass" data-target="modal-heart">
-          <span class="card-icon">❤️</span><span class="card-label">Read My Heart</span>
-        </button>
-        <button class="choice-card glass" data-target="modal-letter">
-          <span class="card-icon">💌</span><span class="card-label">Open Love Letter</span>
-        </button>
-        <button class="choice-card glass" data-target="modal-memories">
-          <span class="card-icon">📸</span><span class="card-label">Our Memories</span>
-        </button>
-        <button class="choice-card glass" data-target="modal-why">
-          <span class="card-icon">🌹</span><span class="card-label">Why I Love You</span>
-        </button>
-        <button class="choice-card glass wide" data-target="modal-final">
-          <span class="card-icon">⭐</span><span class="card-label">Final Surprise</span>
-        </button>
-      </div>
-    </section>
+    </main>
 
-    <!-- GALLERY SECTION (Slideshow Container) -->
-    <section id="gallery-section" class="section">
-      <h2 class="section-title">Our Memories, One Frame at a Time</h2>
-      <!-- JavaScript will fully handle this container -->
-      <div id="gallery-grid"></div>
-    </section>
-
+    <!-- SITE FOOTER -->
     <footer id="site-footer">
-      <p>Sirf Apki Meri Jaan · Sirf Apki</p>
-      <p class="footer-signature">Forever Yours, Abdul Rehman ❤️</p>
+        <p>Made with love for special moments</p>
+        <div class="footer-signature">Forever & Always</div>
     </footer>
 
-  </div>
-</div>
-
-<!-- ================= MODALS ================= -->
-<div class="modal-overlay" id="modal-overlay"></div>
-
-<div class="modal" id="modal-heart">
-  <button class="modal-close">✕</button>
-  <div class="modal-inner glass">
-    <h3>Read My Heart</h3>
-    <p class="modal-text">Every dharkan of this dil beats one name — Alizay. You are not a chapter — you are the whole kitaab. You are my sakoon when the world is loud, my noor when the night forgets the moon, and my kainat when I forget everything else. Ant Al Hayat — the essence of life itself — that is what you are to me.</p>
-    <div class="heartbeat-line"><span class="beat">❤</span></div>
-  </div>
-</div>
-
-<div class="modal" id="modal-letter">
-  <button class="modal-close">✕</button>
-  <div class="modal-inner glass letter-paper">
-    <h3>A Letter From My Heart</h3>
-    <div class="letter-body" id="letter-body"></div>
-  </div>
-</div>
-
-<div class="modal" id="modal-memories">
-  <button class="modal-close">✕</button>
-  <div class="modal-inner glass">
-    <h3>Our Memories</h3>
-    <p class="modal-sub">Every frame, a heartbeat we shared.</p>
-    <!-- JavaScript will also cleanly handle the slideshow here -->
-    <div id="gallery-grid-modal"></div>
-  </div>
-</div>
-
-<div class="modal" id="modal-why">
-  <button class="modal-close">✕</button>
-  <div class="modal-inner glass">
-    <h3>Why I Love You</h3>
-    <ul class="reasons-list">
-      <li>🌹 Because you are my Sakoon-e-Qalb — the peace of my restless heart.</li>
-      <li>🌹 Because your smile rewrites the worst of my days.</li>
-      <li>🌹 Because you are Wafadar-e-Ishq — loyal to a love that deserves you.</li>
-      <li>🌹 Because you are my Kul Kainat — my entire universe, nothing less.</li>
-      <li>🌹 Because loving you feels like the only thing I've ever done right.</li>
-      <li>🌹 Because you are Noor-e-Jahan — the light this world quietly needed.</li>
-    </ul>
-  </div>
-</div>
-
-<div class="modal" id="modal-final">
-  <button class="modal-close">✕</button>
-  <div class="modal-inner glass final-modal">
-    <h3>The Final Surprise</h3>
-    <p class="modal-text">Janum, I Love You Soo Much meri jaan. You are my Goodluck.</p>
-    <p class="modal-text">In Sha Allah, ek din hum apki birthday saath celebrate karenge. Wallah meri jaan, woh meri zindagi ka sab se haseen din hoga.</p>
-    <p class="modal-text signature-final">Sirf Apka. Sirf Apka. Kisi Aur Ka Thora Sa Bhi Nahi.</p>
-    <button class="btn-gold" id="fireworks-btn">Celebrate With Me ✨</button>
-  </div>
-</div>
-
-<script src="script.js"></script>
+    <!-- Scripts -->
+    <script src="script.js"></script>
 </body>
 </html>
