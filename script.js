@@ -52,22 +52,39 @@ const passwordForm = document.getElementById("password-form");
 const passwordInput = document.getElementById("password-input");
 const passwordError = document.getElementById("password-error");
 
-passwordForm.addEventListener("submit", (e) => {
-  e.preventDefault();
+// Form submission ko handle karne ke liye simple function
+function checkPassword(e) {
+  if (e) {
+    e.preventDefault(); // Page refresh hone se rokne ke liye
+    e.stopPropagation();
+  }
+  
   if (passwordInput.value.trim() === SECRET_PASSWORD) {
-    passwordError.classList.remove("show");
+    if (passwordError) passwordError.classList.remove("show");
     passwordScreen.style.opacity = "0";
     setTimeout(() => {
       passwordScreen.classList.add("hidden");
       startIntroSequence();
     }, 700);
   } else {
-    passwordError.classList.add("show");
+    if (passwordError) passwordError.classList.add("show");
     passwordInput.style.borderColor = "#ff5566";
     passwordInput.value = "";
     setTimeout(() => (passwordInput.style.borderColor = ""), 900);
   }
-});
+  return false;
+}
+
+// Dono events attach kar dete hain taake kisi tarah refresh na ho
+if (passwordForm) {
+  passwordForm.addEventListener("submit", checkPassword);
+  
+  // Agar button alag se click ho to bhi yahi function chale
+  const unlockBtn = passwordForm.querySelector("button");
+  if (unlockBtn) {
+    unlockBtn.addEventListener("click", checkPassword);
+  }
+}
 
 /* =========================================================
    INTRO SEQUENCE: loading -> ribbon -> gift -> site
