@@ -24,16 +24,6 @@
 
     <div id="main-application-hub" class="hidden-layout">
         
-        <div id="music-player" class="glass">
-            <button id="music-toggle">🎵</button>
-            <span class="status-text">Playing</span>
-            <div class="music-bars">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-
         <div id="cursor-glow"></div>
         <div id="petals-container"></div>
 
@@ -57,13 +47,14 @@
             </div>
 
             <div class="date-badge glass">📅 07 July 2007</div>
-            <p class="scroll-note">Scroll the story of us</p>
+            <p class="scroll-note">Unlock the calendar below to see our story</p>
             <div class="indicator-line"></div>
         </header>
 
         <main>
             <section class="section-container">
                 <h2 class="block-title">The Day Heaven Sent a Gift</h2>
+                <p class="calendar-instruction">Click her beautiful birth date (07) to unlock my heart... ✨</p>
                 <div class="calendar-card glass">
                     <div class="calendar-header">July 2026</div>
                     <div class="calendar-weekdays">
@@ -71,7 +62,7 @@
                     </div>
                     <div class="calendar-days">
                         <span></span><span></span><span></span><span>1</span><span>2</span><span>3</span><span>4</span>
-                        <span>5</span><span>6</span><span class="highlight-day">7</span><span>8</span><span>9</span><span>10</span><span>11</span>
+                        <span>5</span><span>6</span><span class="highlight-day clickable-key" id="birthday-key">7</span><span>8</span><span>9</span><span>10</span><span>11</span>
                         <span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span>
                         <span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span>
                         <span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
@@ -80,38 +71,56 @@
                 </div>
             </section>
 
-            <section class="section-container">
-                <h2 class="block-title">Choose a Path Into My Heart</h2>
-                <div class="path-grid">
-                    <button class="path-btn glass" onclick="openModal('modal-heart')">
-                        <span class="btn-icon">💖</span>
-                        <span class="btn-label">Read My Heart</span>
-                    </button>
-                    <button class="path-btn glass" onclick="openModal('modal-letter')">
-                        <span class="btn-icon">💌</span>
-                        <span class="btn-label">Open Love Letter</span>
-                    </button>
-                    <button class="path-btn glass" onclick="openModal('modal-memories')">
-                        <span class="btn-icon">📸</span>
-                        <span class="btn-label">Our Memories</span>
-                    </button>
-                    <button class="path-btn glass" onclick="openModal('modal-why')">
-                        <span class="btn-icon">🌹</span>
-                        <span class="btn-label">Why I Love You</span>
-                    </button>
-                    <button class="path-btn glass full-width" onclick="openModal('modal-surprise')">
-                        <span class="btn-icon">⭐</span>
-                        <span class="btn-label">Final Surprise</span>
-                    </button>
+            <div id="secret-story-content" class="hidden-story-vault">
+                
+                <div id="music-player" class="glass">
+                    <button id="music-toggle">🎵</button>
+                    <span class="status-text">Playing</span>
+                    <div class="music-bars">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </div>
-            </section>
 
-            <section class="section-container">
-                <h2 class="block-title">Our Memories, One Frame at a Time</h2>
-                <div class="center-frame glass">
-                    <img src="images/pic1.jpg" alt="Alizay & Abdul Rehman" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600'">
-                </div>
-            </section>
+                <section class="section-container">
+                    <h2 class="block-title">Choose a Path Into My Heart</h2>
+                    <div class="path-grid">
+                        <button class="path-btn glass" onclick="openModal('modal-heart')">
+                            <span class="btn-icon">💖</span>
+                            <span class="btn-label">Read My Heart</span>
+                        </button>
+                        <button class="path-btn glass" onclick="openModal('modal-letter')">
+                            <span class="btn-icon">💌</span>
+                            <span class="btn-label">Open Love Letter</span>
+                        </button>
+                        <button class="path-btn glass" onclick="openModal('modal-memories')">
+                            <span class="btn-icon">📸</span>
+                            <span class="btn-label">Our Memories</span>
+                        </button>
+                        <button class="path-btn glass" onclick="openModal('modal-why')">
+                            <span class="btn-icon">🌹</span>
+                            <span class="btn-label">Why I Love You</span>
+                        </button>
+                        <button class="path-btn glass full-width" onclick="openModal('modal-surprise')">
+                            <span class="btn-icon">⭐</span>
+                            <span class="btn-label">Final Surprise</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="section-container">
+                    <h2 class="block-title">Our Memories, One Frame at a Time</h2>
+                    <div class="center-frame glass">
+                        <img id="main-hero-img" src="1.jpg" alt="Alizay & Abdul Rehman" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600'">
+                    </div>
+                </section>
+
+                <footer id="main-footer">
+                    <p>Crafted with love for Alizay</p>
+                    <p class="footer-bold">Forever Yours, Abdul Rehman 💕</p>
+                </footer>
+            </div>
         </main>
 
         <div id="modal-heart" class="modal-overlay">
@@ -170,9 +179,9 @@
             <div class="modal-card glass animate-pop">
                 <button class="close-btn" onclick="closeModal('modal-memories')">×</button>
                 <h3 class="modal-title">Our Memories</h3>
-                <p class="modal-sub-caption">Every frame, a heartbeat we shared.</p>
+                <p class="modal-sub-caption">Every click reveals a dynamic moment of us.</p>
                 <div class="modal-image-container">
-                    <img src="images/pic2.jpg" alt="Memory Frame" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600'">
+                    <img id="dynamic-memory-img" src="2.jpg" alt="Memory Frame" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600'">
                 </div>
             </div>
         </div>
@@ -202,11 +211,6 @@
                 <button class="celebrate-action-btn" id="final-action-fire">Celebrate With Me ✨</button>
             </div>
         </div>
-
-        <footer id="main-footer">
-            <p>Crafted with love for Alizay</p>
-            <p class="footer-bold">Forever Yours, Abdul Rehman 💕</p>
-        </footer>
     </div>
 
     <script src="script.js"></script>
