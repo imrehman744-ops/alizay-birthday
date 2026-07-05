@@ -1,13 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // Default Access Code Configuration
     const ACCESS_PIN = "0707"; 
+
+    // Image Configuration setup (Direct from Root)
+    const totalImages = 56;
+    const imgExtension = ".jpg"; // Agar aapki images .png hain to ise ".png" kar dein
 
     const unlockBtn = document.getElementById("unlock-trigger");
     const pinField = document.getElementById("pin-field");
     const lockScreen = document.getElementById("lock-screen-gate");
     const mainApp = document.getElementById("main-application-hub");
     const errAlert = document.getElementById("error-alert");
+    
+    const birthdayKey = document.getElementById("birthday-key");
+    const secretVault = document.getElementById("secret-story-content");
 
     // GATEWAY SECURITY CHECK EXECUTER
     function checkSystemPin() {
@@ -31,6 +37,28 @@ document.addEventListener("DOMContentLoaded", () => {
         unlockBtn.addEventListener("click", checkSystemPin);
         pinField.addEventListener("keypress", (e) => {
             if(e.key === "Enter") checkSystemPin();
+        });
+    }
+
+    // CALENDAR 07 DATE CLICK UNLOCK MECHANISM
+    if(birthdayKey && secretVault) {
+        birthdayKey.addEventListener("click", () => {
+            if(!secretVault.classList.contains("revealed-vault")) {
+                secretVault.classList.add("revealed-vault");
+                birthdayKey.classList.add("activated-pulse");
+                
+                // Set initial main frame random image from 1 to 56
+                const mainHeroImg = document.getElementById("main-hero-img");
+                if (mainHeroImg) {
+                    const randomNum = Math.floor(Math.random() * totalImages) + 1;
+                    mainHeroImg.src = randomNum + imgExtension;
+                }
+
+                // Smoothly scroll down to show unlocked content
+                setTimeout(() => {
+                    secretVault.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            }
         });
     }
 
@@ -101,11 +129,22 @@ document.addEventListener("DOMContentLoaded", () => {
 function openModal(modalId) {
     const targetModal = document.getElementById(modalId);
     if (targetModal) {
+        // If opening memories modal, load a fresh random image from 1 to 56 direct root
+        if (modalId === 'modal-memories') {
+            const memoryImg = document.getElementById("dynamic-memory-img");
+            if (memoryImg) {
+                const totalImages = 56;
+                const imgExtension = ".jpg"; 
+                const randomNum = Math.floor(Math.random() * totalImages) + 1;
+                memoryImg.src = randomNum + imgExtension;
+            }
+        }
         targetModal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
 }
 
+// Global modal close operations
 function closeModal(modalId) {
     const targetModal = document.getElementById(modalId);
     if (targetModal) {
