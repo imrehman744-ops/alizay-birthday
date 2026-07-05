@@ -141,8 +141,10 @@ function initSiteFeatures() {
 
   buildTypewriter();
   buildCalendar();
-  buildGallery("gallery-grid", 50);
-  buildGallery("gallery-grid-modal", 50);
+  
+  // Naya Live Slideshow Setup
+  buildLiveSlideshow("gallery-grid");
+  buildLiveSlideshow("gallery-grid-modal");
   
   const letterBody = document.getElementById("letter-body");
   if (letterBody) letterBody.innerText = LOVE_LETTER;
@@ -252,25 +254,67 @@ function unlockSite(cell) {
   }, 500);
 }
 
-/* ---- Gallery With Actual Images ---- */
-function buildGallery(containerId, count) {
-  const grid = document.getElementById(containerId);
-  if (!grid) return;
-  
-  grid.innerHTML = ""; // Clear placeholders
-  
-  for (let i = 1; i <= count; i++) {
-    const item = document.createElement("div");
-    item.className = "gallery-item";
+/* ---- NEW: Live Animated Automatic Slideshow ---- */
+function buildLiveSlideshow(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  // Purane static grid styles ko auto-fade container mein convert karne ke liye styling reset
+  container.style.display = "block";
+  container.style.position = "relative";
+  container.style.width = "100%";
+  container.style.height = "450px"; 
+  container.style.overflow = "hidden";
+  container.style.borderRadius = "15px";
+  container.style.boxShadow = "0 8px 32px rgba(0,0,0,0.5)";
+  container.innerHTML = ""; // Clear placeholders
+
+  // Aapki uploaded 5 images ki arrays
+  const images = ["1.JPG.jpg", "2.JPG.jpg", "3.JPG.jpg", "4.JPG.jpg", "5.JPG.jpg"];
+  let currentIdx = 0;
+
+  // Har image ke liye slide element banana aur inject karna
+  images.forEach((url, index) => {
+    const slide = document.createElement("div");
+    slide.className = "live-slide";
+    slide.style.position = "absolute";
+    slide.style.top = "0";
+    slide.style.left = "0";
+    slide.style.width = "100%";
+    slide.style.height = "100%";
+    slide.style.opacity = index === 0 ? "1" : "0";
+    slide.style.transition = "opacity 1.2s ease-in-out, transform 6s linear";
+    slide.style.transform = index === 0 ? "scale(1)" : "scale(1.1)";
     
-    const imgUrl = `${i}.JPG.jpg`;
-    
-    item.innerHTML = `
-      <img src="${imgUrl}" alt="Memory ${i}" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;" onerror="this.style.display='none';">
+    slide.innerHTML = `
+      <img src="${url}" alt="Memory" style="width:100%; height:100%; object-fit:cover;">
     `;
-    grid.appendChild(item);
-  }
+    container.appendChild(slide);
+  });
+
+  const slides = container.querySelectorAll(".live-slide");
+  if(slides.length === 0) return;
+
+  // Slow Cinematic Zoom Effect setup karein pehli slide par
+  slides[0].style.transform = "scale(1.08)";
+
+  // Automatic slide changing logic loop (Har 3.5 seconds baad image badlegi)
+  setInterval(() => {
+    // Current active slide ko out-fade karein aur scale reset karein
+    slides[currentIdx].style.opacity = "0";
+    slides[currentIdx].style.transform = "scale(1.1)";
+
+    // Agli slide par switch karein
+    currentIdx = (currentIdx + 1) % slides.length;
+
+    // Nayi slide ko active, in-fade aur slow zoom in karein
+    slides[currentIdx].style.opacity = "1";
+    slides[currentIdx].style.transform = "scale(1.05)";
+  }, 3500);
 }
+
+/* ---- Backward compatibility ke liye blank function backup ---- */
+function buildGallery(c, ct) {}
 
 /* ---- Modals ---- */
 function bindModals() {
