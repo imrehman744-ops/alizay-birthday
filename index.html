@@ -3,222 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alizay - Forever Yours</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Alizay - The Story of Us</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Background Layers -->
-    <div id="cursor-glow"></div>
-    <div id="petals-container"></div>
-
-    <!-- Music Status bar -->
-    <div id="music-player" class="glass">
-        <button id="music-toggle">🎵</button>
-        <span class="status-text">Playing</span>
-        <div class="music-bars">
-            <span></span>
-            <span></span>
-            <span></span>
+    <div id="lock-screen-gate">
+        <div class="lock-box glass">
+            <div class="lock-icon">🔒</div>
+            <h2>Enter the Access Pin</h2>
+            <p class="lock-hint">For Heaven's Greatest Gift</p>
+            <div class="pin-input-wrap">
+                <input type="password" id="pin-field" maxlength="4" placeholder="••••" autofocus>
+                <button id="unlock-trigger">Unlock</button>
+            </div>
+            <p id="error-alert" class="hidden-alert">Incorrect Pin, Please Try Again...</p>
         </div>
     </div>
 
-    <!-- HERO DISPLAY -->
-    <header id="hero">
-        <p class="top-signature">FOREVER YOURS, ABDUL REHMAN</p>
-        <h1 class="hero-title">Alizay</h1>
-        <p class="hero-subtitle">(Always My) <span id="typewriter-text"></span><span class="cursor-blink">|</span></p>
+    <div id="main-application-hub" class="hidden-layout">
         
-        <!-- Nicknames Matrix -->
-        <div class="nickname-cloud">
-            <span>Wajid-e-Janum</span>
-            <span>Zoja-E-Janum</span>
-            <span>Sakoon-e-Qalb</span>
-            <span>Wajid-e-Muhabbat</span>
-            <span>For Everest</span>
-            <span>Broshna-Mait</span>
-            <span>Sakon-e-Qalan</span>
-            <span>Sakoon-e-Jahan</span>
-            <span>Noor-e-Jaan</span>
-            <span>Baranaby</span>
-            <span>Muntazir-e-Ishq</span>
+        <div id="music-player" class="glass">
+            <button id="music-toggle">🎵</button>
+            <span class="status-text">Playing</span>
+            <div class="music-bars">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
 
-        <div class="date-badge glass">
-            📅 07 July 2007
-        </div>
+        <div id="cursor-glow"></div>
+        <div id="petals-container"></div>
 
-        <p class="scroll-note">Scroll the story of us</p>
-        <div class="indicator-line"></div>
-    </header>
+        <header id="hero">
+            <p class="top-signature">FOREVER YOURS, ABDUL REHMAN</p>
+            <h1 class="hero-title">Alizay</h1>
+            <p class="hero-subtitle">(Always My) <span id="typewriter-text"></span><span class="cursor-blink">|</span></p>
+            
+            <div class="nickname-cloud">
+                <span>Wajid-e-Janum</span>
+                <span>Zoja-E-Janum</span>
+                <span>Sakoon-e-Qalb</span>
+                <span>Wajid-e-Muhabbat</span>
+                <span>For Everest</span>
+                <span>Broshna-Mait</span>
+                <span>Sakon-e-Qalan</span>
+                <span>Sakoon-e-Jahan</span>
+                <span>Noor-e-Jaan</span>
+                <span>Baranaby</span>
+                <span>Muntazir-e-Ishq</span>
+            </div>
 
-    <!-- MAIN PLATFORM -->
-    <main id="main-content">
-        
-        <!-- CALENDAR BLOCK -->
-        <section class="section-container">
-            <h2 class="block-title">The Day Heaven Sent a Gift</h2>
-            <div class="calendar-card glass">
-                <div class="calendar-header">July 2026</div>
-                <div class="calendar-weekdays">
-                    <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+            <div class="date-badge glass">📅 07 July 2007</div>
+            <p class="scroll-note">Scroll the story of us</p>
+            <div class="indicator-line"></div>
+        </header>
+
+        <main>
+            <section class="section-container">
+                <h2 class="block-title">The Day Heaven Sent a Gift</h2>
+                <div class="calendar-card glass">
+                    <div class="calendar-header">July 2026</div>
+                    <div class="calendar-weekdays">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                    <div class="calendar-days">
+                        <span></span><span></span><span></span><span>1</span><span>2</span><span>3</span><span>4</span>
+                        <span>5</span><span>6</span><span class="highlight-day">7</span><span>8</span><span>9</span><span>10</span><span>11</span>
+                        <span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span>
+                        <span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span>
+                        <span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
+                    </div>
+                    <div class="calendar-footer">Our story is dedicated, meet jaan. ❤</div>
                 </div>
-                <div class="calendar-days">
-                    <span></span><span></span><span></span><span>1</span><span>2</span><span>3</span><span>4</span>
-                    <span>5</span><span>6</span><span class="highlight-day">7</span><span>8</span><span>9</span><span>10</span><span>11</span>
-                    <span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span>
-                    <span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span>
-                    <span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
+            </section>
+
+            <section class="section-container">
+                <h2 class="block-title">Choose a Path Into My Heart</h2>
+                <div class="path-grid">
+                    <button class="path-btn glass" onclick="openModal('modal-heart')">
+                        <span class="btn-icon">💖</span>
+                        <span class="btn-label">Read My Heart</span>
+                    </button>
+                    <button class="path-btn glass" onclick="openModal('modal-letter')">
+                        <span class="btn-icon">💌</span>
+                        <span class="btn-label">Open Love Letter</span>
+                    </button>
+                    <button class="path-btn glass" onclick="openModal('modal-memories')">
+                        <span class="btn-icon">📸</span>
+                        <span class="btn-label">Our Memories</span>
+                    </button>
+                    <button class="path-btn glass" onclick="openModal('modal-why')">
+                        <span class="btn-icon">🌹</span>
+                        <span class="btn-label">Why I Love You</span>
+                    </button>
+                    <button class="path-btn glass full-width" onclick="openModal('modal-surprise')">
+                        <span class="btn-icon">⭐</span>
+                        <span class="btn-label">Final Surprise</span>
+                    </button>
                 </div>
-                <div class="calendar-footer">Our story is dedicated, meet jaan. ❤</div>
-            </div>
-        </section>
+            </section>
 
-        <!-- INTERACTIVE PATH MATRIX -->
-        <section class="section-container">
-            <h2 class="block-title">Choose a Path Into My Heart</h2>
-            <div class="path-grid">
-                <button class="path-btn glass" onclick="openModal('modal-heart')">
-                    <span class="btn-icon">💖</span>
-                    <span class="btn-label">Read My Heart</span>
-                </button>
-                <button class="path-btn glass" onclick="openModal('modal-letter')">
-                    <span class="btn-icon">💌</span>
-                    <span class="btn-label">Open Love Letter</span>
-                </button>
-                <button class="path-btn glass" onclick="openModal('modal-memories')">
-                    <span class="btn-icon">📸</span>
-                    <span class="btn-label">Our Memories</span>
-                </button>
-                <button class="path-btn glass" onclick="openModal('modal-why')">
-                    <span class="btn-icon">🌹</span>
-                    <span class="btn-label">Why I Love You</span>
-                </button>
-                <button class="path-btn glass full-width" onclick="openModal('modal-surprise')">
-                    <span class="btn-icon">⭐</span>
-                    <span class="btn-label">Final Surprise</span>
-                </button>
-            </div>
-        </section>
+            <section class="section-container">
+                <h2 class="block-title">Our Memories, One Frame at a Time</h2>
+                <div class="center-frame glass">
+                    <img src="images/pic1.jpg" alt="Alizay & Abdul Rehman" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600'">
+                </div>
+            </section>
+        </main>
 
-        <!-- LOWER VISUAL CONTAINER -->
-        <section class="section-container">
-            <h2 class="block-title">Our Memories, One Frame at a Time</h2>
-            <div class="center-frame glass">
-                <img src="images/pic1.jpg" alt="Alizay & Abdul Rehman" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600'">
-            </div>
-        </section>
-
-    </main>
-
-    <!-- MODERN IMMERSIVE MODALS WINDOW SYSTEM -->
-    
-    <!-- 1. Read My Heart Modal -->
-    <div id="modal-heart" class="modal-overlay">
-        <div class="modal-card glass animate-pop">
-            <button class="close-btn" onclick="closeModal('modal-heart')">×</button>
-            <h3 class="modal-title">Read My Heart</h3>
-            <p class="modal-body-text text-center">
-                Every dharkan of this dil beats one name — Alizay. You are not a chapter — you are the whole kitaab. You are my sakoon when the world is loud, my noor when the night forgets the moon, and my kainat when I forget everything else. Ant Al Hayat — the essence of life itself — that is what you are to me. ❤️
-            </p>
-        </div>
-    </div>
-
-    <!-- 2. Open Love Letter Modal -->
-    <div id="modal-letter" class="modal-overlay">
-        <div class="modal-card glass animate-pop scrollable-modal">
-            <button class="close-btn" onclick="closeModal('modal-letter')">×</button>
-            <h3 class="modal-title">A Letter From My Heart</h3>
-            <div class="modal-body-text poetry-layout">
-                <p>Janum,</p>
-                <p>I Love You Soo Much meri jaan.</p>
-                <p>You are my Goodluck.</p>
-                <br>
-                <p>My dear Zoja-E-Janum,</p>
-                <p>Sakoon-e-Qalb,</p>
-                <p>Ant Al Hayat,</p>
-                <p>Ya Sadari,</p>
-                <p>Rooh-e-Man,</p>
-                <p>Noor-e-Jahan,</p>
-                <p>Wajid-e-Muhabbat,</p>
-                <p>Dharkan-e-Dil,</p>
-                <p>Rooh-e-Jism,</p>
-                <p>Kul Kainat,</p>
-                <p>Wafadar-e-Ishq.</p>
-                <br>
-                <p>Tumhe pata hai tum meri liye meri puri kainaat ho meri jaan.</p>
-                <p>I love you sooooooooooooooooooooooo muchhhhhh meri jaan.</p>
-                <br>
-                <p>Apni dil ki har dharkan se Happy Happy Birthday meri jaan.</p>
-                <br>
-                <p>Allah Pak apko hamesha hasta muskurata rakhe. Ameen.</p>
-                <p>Allah Pak apko hamesha mera banaye.</p>
-                <p>Apko duniya bhar ki har khushi ata farmaye.</p>
-                <br>
-                <p>In Sha Allah ek din hum apki birthday saath celebrate karenge meri jaan.</p>
-                <p>Wallah meri jaan woh meri zindagi ka sab se haseen din hoga.</p>
-                <br>
-                <p>Sirf apki meri jaan.</p>
-                <p>Sirf apki.</p>
-                <p>Kisi aur ka thora sa bhi nahi.</p>
-                <br>
-                <p class="letter-sign">Forever Yours,<br>Abdul Rehman 💕</p>
+        <div id="modal-heart" class="modal-overlay">
+            <div class="modal-card glass animate-pop">
+                <button class="close-btn" onclick="closeModal('modal-heart')">×</button>
+                <h3 class="modal-title">Read My Heart</h3>
+                <p class="modal-body-text text-center">
+                    Every dharkan of this dil beats one name — Alizay. You are not a chapter — you are the whole kitaab. You are my sakoon when the world is loud, my noor when the night forgets the moon, and my kainat when I forget everything else. Ant Al Hayat — the essence of life itself — that is what you are to me. ❤️
+                </p>
             </div>
         </div>
-    </div>
 
-    <!-- 3. Our Memories Modal -->
-    <div id="modal-memories" class="modal-overlay">
-        <div class="modal-card glass animate-pop">
-            <button class="close-btn" onclick="closeModal('modal-memories')">×</button>
-            <h3 class="modal-title">Our Memories</h3>
-            <p class="modal-sub-caption">Every frame, a heartbeat we shared.</p>
-            <div class="modal-image-container">
-                <img src="images/pic2.jpg" alt="Memory Frame" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600'">
+        <div id="modal-letter" class="modal-overlay">
+            <div class="modal-card glass animate-pop scrollable-modal">
+                <button class="close-btn" onclick="closeModal('modal-letter')">×</button>
+                <h3 class="modal-title">A Letter From My Heart</h3>
+                <div class="modal-body-text poetry-layout">
+                    <p>Janum,</p>
+                    <p>I Love You Soo Much meri jaan.</p>
+                    <p>You are my Goodluck.</p>
+                    <br>
+                    <p>My dear Zoja-E-Janum,</p>
+                    <p>Sakoon-e-Qalb,</p>
+                    <p>Ant Al Hayat,</p>
+                    <p>Ya Sadari,</p>
+                    <p>Rooh-e-Man,</p>
+                    <p>Noor-e-Jahan,</p>
+                    <p>Wajid-e-Muhabbat,</p>
+                    <p>Dharkan-e-Dil,</p>
+                    <p>Rooh-e-Jism,</p>
+                    <p>Kul Kainat,</p>
+                    <p>Wafadar-e-Ishq.</p>
+                    <br>
+                    <p>Tumhe pata hai tum meri liye meri puri kainaat ho meri jaan.</p>
+                    <p>I love you sooooooooooooooooooooooo muchhhhhh meri jaan.</p>
+                    <br>
+                    <p>Apni dil ki har dharkan se Happy Happy Birthday meri jaan.</p>
+                    <br>
+                    <p>Allah Pak apko hamesha hasta muskurata rakhe. Ameen.</p>
+                    <p>Allah Pak apko hamesha mera banaye.</p>
+                    <p>Apko duniya bhar ki har khushi ata farmaye.</p>
+                    <br>
+                    <p>In Sha Allah ek din hum apki birthday saath celebrate karenge meri jaan.</p>
+                    <p>Wallah meri jaan woh meri zindagi ka sab se haseen din hoga.</p>
+                    <br>
+                    <p>Sirf apki meri jaan.</p>
+                    <p>Sirf apki.</p>
+                    <p>Kisi aur ka thora sa bhi nahi.</p>
+                    <br>
+                    <p class="letter-sign">Forever Yours,<br>Abdul Rehman 💕</p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- 4. Why I Love You Modal -->
-    <div id="modal-why" class="modal-overlay">
-        <div class="modal-card glass animate-pop">
-            <button class="close-btn" onclick="closeModal('modal-why')">×</button>
-            <h3 class="modal-title">Why I Love You</h3>
-            <ul class="reason-list">
-                <li>🌹 Because you are my Sakoon-e-Qalb — the peace of my restless heart.</li>
-                <li>🌹 Because your smile rewrites the worst of my days.</li>
-                <li>🌹 Because you are Wafadar-e-Ishq — loyal to a love that deserves you.</li>
-                <li>🌹 Because you are my Kul Kainat — my entire universe, nothing less.</li>
-                <li>🌹 Because loving you feels like the only thing I've ever done right.</li>
-                <li>🌹 Because you are Noor-e-Jahan — the light this world quietly needed.</li>
-            </ul>
+        <div id="modal-memories" class="modal-overlay">
+            <div class="modal-card glass animate-pop">
+                <button class="close-btn" onclick="closeModal('modal-memories')">×</button>
+                <h3 class="modal-title">Our Memories</h3>
+                <p class="modal-sub-caption">Every frame, a heartbeat we shared.</p>
+                <div class="modal-image-container">
+                    <img src="images/pic2.jpg" alt="Memory Frame" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600'">
+                </div>
+            </div>
         </div>
-    </div>
 
-    <!-- 5. Final Surprise Modal -->
-    <div id="modal-surprise" class="modal-overlay">
-        <div class="modal-card glass animate-pop text-center">
-            <button class="close-btn" onclick="closeModal('modal-surprise')">×</button>
-            <h3 class="modal-title">The Final Surprise</h3>
-            <p class="modal-body-text style-emphasis">
-                Janum, I Love You Soo Much meri jaan. You are my Goodluck.
-            </p>
-            <p class="modal-body-text">
-                In Sha Allah, ek din hum apki birthday saath celebrate karenge. Wallah meri jaan, woh meri zindagi ka sab se haseen din hoga.
-            </p>
-            <p class="gold-highlight-text">
-                Sirf Apka. Sirf Apka. Kisi Aur Ka Thora Sa Bhi Nahi.
-            </p>
-            <button class="celebrate-action-btn" onclick="alert('Happy Birthday Meri Jaan! 🎂🎉')">Celebrate With Me ✨</button>
+        <div id="modal-why" class="modal-overlay">
+            <div class="modal-card glass animate-pop">
+                <button class="close-btn" onclick="closeModal('modal-why')">×</button>
+                <h3 class="modal-title">Why I Love You</h3>
+                <ul class="reason-list">
+                    <li>🌹 Because you are my Sakoon-e-Qalb — the peace of my restless heart.</li>
+                    <li>🌹 Because your smile rewrites the worst of my days.</li>
+                    <li>🌹 Because you are Wafadar-e-Ishq — loyal to a love that deserves you.</li>
+                    <li>🌹 Because you are my Kul Kainat — my entire universe, nothing less.</li>
+                    <li>🌹 Because loving you feels like the only thing I've ever done right.</li>
+                    <li>🌹 Because you are Noor-e-Jahan — the light this world quietly needed.</li>
+                </ul>
+            </div>
         </div>
-    </div>
 
-    <!-- SITE BASE FOOTER -->
-    <footer id="main-footer">
-        <p>Crafted with love for Alizay</p>
-        <p class="footer-bold">Forever Yours, Abdul Rehman 💕</p>
-    </footer>
+        <div id="modal-surprise" class="modal-overlay">
+            <div class="modal-card glass animate-pop text-center">
+                <button class="close-btn" onclick="closeModal('modal-surprise')">×</button>
+                <h3 class="modal-title">The Final Surprise</h3>
+                <p class="modal-body-text style-emphasis">Janum, I Love You Soo Much meri jaan. You are my Goodluck.</p>
+                <p class="modal-body-text">In Sha Allah, ek din hum apki birthday saath celebrate karenge. Wallah meri jaan, woh meri zindagi ka sab se haseen din hoga.</p>
+                <p class="gold-highlight-text">Sirf Apka. Sirf Apka. Kisi Aur Ka Thora Sa Bhi Nahi.</p>
+                <button class="celebrate-action-btn" id="final-action-fire">Celebrate With Me ✨</button>
+            </div>
+        </div>
+
+        <footer id="main-footer">
+            <p>Crafted with love for Alizay</p>
+            <p class="footer-bold">Forever Yours, Abdul Rehman 💕</p>
+        </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>
