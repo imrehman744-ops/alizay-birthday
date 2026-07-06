@@ -100,6 +100,52 @@ document.addEventListener("DOMContentLoaded", () => {
                 petalsContainer.appendChild(petal);
             }
         }
+
+        // Floating Balloons Engine (birthday accent, rises upward)
+        const balloonsContainer = document.getElementById('balloons-container');
+        if (balloonsContainer) {
+            balloonsContainer.innerHTML = '';
+            const balloonColors = ['#dfba6b', '#b52b3d', '#fbeee6'];
+            for (let i = 0; i < 14; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.left = Math.random() * 100 + 'vw';
+                balloon.style.background = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+                balloon.style.animationDelay = Math.random() * 10 + 's';
+                balloon.style.animationDuration = (Math.random() * 6 + 10) + 's';
+                const size = Math.random() * 10 + 22;
+                balloon.style.width = size + 'px';
+                balloon.style.height = (size * 1.3) + 'px';
+                balloonsContainer.appendChild(balloon);
+            }
+        }
+    }
+
+    // Confetti Burst Engine (fires from a given element outward)
+    function fireConfetti(originEl) {
+        const colors = ['#dfba6b', '#b52b3d', '#fbeee6', '#ffffff'];
+        const rect = originEl ? originEl.getBoundingClientRect() : null;
+        const originX = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
+        const originY = rect ? rect.top + rect.height / 2 : window.innerHeight / 2;
+
+        for (let i = 0; i < 60; i++) {
+            const piece = document.createElement('div');
+            piece.className = 'confetti-piece';
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 80 + Math.random() * 220;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance - 60;
+            piece.style.setProperty('--tx', tx + 'px');
+            piece.style.setProperty('--ty', ty + 'px');
+            piece.style.setProperty('--rot', (Math.random() * 720 - 360) + 'deg');
+            piece.style.left = originX + 'px';
+            piece.style.top = originY + 'px';
+            piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+            piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+            piece.style.animationDuration = (1 + Math.random() * 0.6) + 's';
+            document.body.appendChild(piece);
+            setTimeout(() => piece.remove(), 1700);
+        }
     }
 
     window.addEventListener("mousemove", (e) => {
@@ -123,6 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const surpriseBtn = document.getElementById("final-action-fire");
     if (surpriseBtn) {
         surpriseBtn.addEventListener("click", () => {
+            fireConfetti(surpriseBtn);
             alert('Happy Birthday Meri Jaan! 🎂🎉 I Love You Forever!');
         });
     }

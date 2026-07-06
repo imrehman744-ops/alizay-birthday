@@ -142,6 +142,63 @@ body {
 #music-player.paused .music-bars span { animation: none; height: 3px; }
 @keyframes bounce { to { height: 3px; } }
 
+/* BALLOON RISE ATMOSPHERE (birthday accent alongside falling petals) */
+#balloons-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 2; overflow: hidden; }
+.balloon {
+  position: absolute;
+  bottom: -90px;
+  width: 26px;
+  height: 34px;
+  border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+  opacity: 0;
+  animation: floatUp linear infinite;
+}
+.balloon::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  width: 1px;
+  height: 20px;
+  background: rgba(251, 238, 230, 0.3);
+  transform: translateX(-50%);
+}
+@keyframes floatUp {
+  0% { transform: translateY(0) translateX(0) rotate(-4deg); opacity: 0; }
+  12% { opacity: 0.55; }
+  88% { opacity: 0.3; }
+  100% { transform: translateY(-115vh) translateX(24px) rotate(6deg); opacity: 0; }
+}
+
+.birthday-badge {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin-bottom: 0.6rem;
+  animation: badgeGlow 2.4s ease-in-out infinite;
+}
+@keyframes badgeGlow {
+  0%, 100% { text-shadow: 0 0 8px rgba(223, 186, 107, 0.3); }
+  50% { text-shadow: 0 0 18px rgba(223, 186, 107, 0.6); }
+}
+
+/* CONFETTI BURST (Celebrate button) */
+.confetti-piece {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 14px;
+  z-index: 500;
+  pointer-events: none;
+  opacity: 1;
+  animation: confettiBurst 1.4s ease-out forwards;
+}
+@keyframes confettiBurst {
+  to { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)); opacity: 0; }
+}
+
 /* HERO DISPLAY TYPOGRAPHY SYSTEM */
 #hero {
   min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
