@@ -23,7 +23,7 @@
     </div>
 
     <div id="main-application-hub" class="hidden-layout">
-        
+
         <div id="cursor-glow"></div>
         <div id="petals-container"></div>
 
@@ -31,7 +31,7 @@
             <p class="top-signature">FOREVER YOURS, ABDUL REHMAN</p>
             <h1 class="hero-title">Alizay</h1>
             <p class="hero-subtitle">(Always My) <span id="typewriter-text"></span><span class="cursor-blink">|</span></p>
-            
+
             <div class="nickname-cloud">
                 <span>Wajid-e-Janum</span>
                 <span>Zoja-E-Janum</span>
@@ -72,7 +72,7 @@
             </section>
 
             <div id="secret-story-content" class="hidden-story-vault">
-                
+
                 <div id="music-player" class="glass">
                     <button id="music-toggle">🎵</button>
                     <span class="status-text">Playing</span>
@@ -111,8 +111,14 @@
 
                 <section class="section-container">
                     <h2 class="block-title">Our Memories, One Frame at a Time</h2>
-                    <div class="center-frame glass">
-                        <img id="main-hero-img" src="1.jpg" alt="Alizay & Abdul Rehman" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600'">
+                    <div class="memory-slideshow glass" id="memory-slideshow">
+                        <div class="slide-progress-bar"><div class="slide-progress-fill" id="slide-progress-fill"></div></div>
+                        <div class="slide-frame" id="slide-frame">
+                            <img id="slide-img" class="slide-img" src="" alt="Alizay & Abdul Rehman">
+                        </div>
+                        <button class="slide-arrow slide-arrow-left" id="slide-prev" aria-label="Previous photo">&#10094;</button>
+                        <button class="slide-arrow slide-arrow-right" id="slide-next" aria-label="Next photo">&#10095;</button>
+                        <div class="slide-counter" id="slide-counter">1 / 56</div>
                     </div>
                 </section>
 
@@ -179,9 +185,14 @@
             <div class="modal-card glass animate-pop">
                 <button class="close-btn" onclick="closeModal('modal-memories')">×</button>
                 <h3 class="modal-title">Our Memories</h3>
-                <p class="modal-sub-caption">Every click reveals a dynamic moment of us.</p>
-                <div class="modal-image-container">
-                    <img id="dynamic-memory-img" src="2.jpg" alt="Memory Frame" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600'">
+                <p class="modal-sub-caption">Every frame, a moment of us.</p>
+                <div class="memory-slideshow modal-slideshow" id="modal-slideshow">
+                    <div class="slide-frame" id="modal-slide-frame">
+                        <img id="modal-slide-img" class="slide-img" src="" alt="Memory Frame">
+                    </div>
+                    <button class="slide-arrow slide-arrow-left" id="modal-slide-prev" aria-label="Previous photo">&#10094;</button>
+                    <button class="slide-arrow slide-arrow-right" id="modal-slide-next" aria-label="Next photo">&#10095;</button>
+                    <div class="slide-counter" id="modal-slide-counter">1 / 56</div>
                 </div>
             </div>
         </div>
