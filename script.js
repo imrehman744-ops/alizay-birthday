@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Image Configuration (matches actual uploaded file names: 1.JPG.jpg, 2.JPG.jpg, ...)
     const totalImages = 56;
-    const imgSuffix = ".JPG.jpg"; // change this if your files use a different extension pattern
+    const imgSuffix = ".jpg";
 
     function getImgSrc(n) {
         return n + imgSuffix;
